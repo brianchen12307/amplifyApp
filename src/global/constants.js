@@ -1,0 +1,1 @@
+export const API_HOST = "https://fwbcv4a8o9.execute-api.ap-southeast-1.amazonaws.com/message_board_dev"
