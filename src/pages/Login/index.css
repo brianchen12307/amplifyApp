@@ -20,3 +20,11 @@ input {
   width: 25%;
   padding: 15px;
 }
+
+.submit{
+  border: 0;
+  background-color: black;
+  color: #fff;
+  padding: 10px 15px;
+  margin-left: 20px;
+}

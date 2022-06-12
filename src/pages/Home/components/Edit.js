@@ -13,7 +13,6 @@ const Edit = (props) => {
             'topic':name,
             'pwd':key,
             'creatorId':props.loginId
-            //'users':[user1, user2]
           })
     props.setroomNum(function(prev) {
       return prev + 1;

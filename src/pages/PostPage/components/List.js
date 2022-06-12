@@ -1,6 +1,6 @@
 import Item from "./Item";
 
-const List = ({ listData, setpostNum }) => {
+const List = ({ listData, setpostNum, loginId}) => {
   return (
     <div className="list">
       {listData.map((item) => {
@@ -13,6 +13,7 @@ const List = ({ listData, setpostNum }) => {
             writtenBy={writtenBy}
             content={content}
             numMessage={numMessage}
+            loginId={loginId}
             setpostNum={setpostNum}
           />
         );

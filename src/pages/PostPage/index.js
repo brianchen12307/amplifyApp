@@ -1,4 +1,4 @@
-import { useState, useEffect, Component } from "react";
+import { useState, useEffect } from "react";
 import {API_HOST} from '../../global/constants'
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
@@ -28,8 +28,8 @@ const Home = () => {
 
   return (
     <div className="app">
-      <Edit setpostNum={setpostNum} creatorId={location.state.creatorId} roomId={location.state.roomId}/>
-      <List listData={data} setpostNum={setpostNum}/>
+      <Edit setpostNum={setpostNum} creatorId={location.state.loginId} roomId={location.state.roomId}/>
+      <List listData={data} setpostNum={setpostNum} loginId={location.state.loginId}/>
     </div>
   );
 };

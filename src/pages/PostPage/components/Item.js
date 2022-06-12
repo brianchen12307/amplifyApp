@@ -1,11 +1,15 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import MessagesList from "./MessagesList"
 import {API_HOST} from '../../../global/constants'
 
-const Item = ({_id, roomId, writtenBy, content, numMessage }) => {
-  const [creatorName, setCreatorName] = useState("");
+const Item = ({_id, roomId, writtenBy, content, numMessage, loginId }) => {
+  const [creatorName, setCreatorName] = useState("")
+  const [data, setData] = useState([{}])
+  const [Ireply, setReply] = useState("")
+  const [mesNum, setmesNum] = useState (0)
 
-/*  useEffect(() => {
+  useEffect(() => {
     axios
     .get(`${API_HOST}/get/userName/`, {
       params:{
@@ -13,27 +17,52 @@ const Item = ({_id, roomId, writtenBy, content, numMessage }) => {
       }
     })
     .then(res => {
-      setCreatorName(res.data)
-      console.log(writtenBy)
+      setCreatorName(res.data.userName)
     })
-})*/
+})
 
   function deleteItem() {
   }
 
-  function reply(){
+  useEffect(() => {
+    axios.get(`${API_HOST}/show/message/`,{
+            params:{
+            'parentType' : "post",
+            'parentId' : _id
+            }
+          })
+         .then(res => {
+          setData(res.data)
+          })
+    }, [mesNum])
+
+
+  function addReply(){
+    axios.post(`${API_HOST}/message`,
+          {
+            'parentType': "post",
+            'parentId': _id,
+            'writtenBy': loginId,
+            'text' : Ireply
+          })
+    setmesNum(function(prev) {
+      return prev + 1;
+    }) 
   }
 
-  
     return (
-      <div className="item">
+      <div className="post">
         <div>
-          <p>Content：{content}</p>
-          <p>Author:{creatorName}      Number of message:{numMessage}</p>
-
+          <p>{content}</p>
+          <p>Author : {creatorName}</p>
+          <p>Number of message : {numMessage}</p>
         </div>
-        <button onClick={reply}className="reply">Reply</button>
-        
+        <div>
+          <p>Reply Here ： </p>
+          <input type="text" value={Ireply} onChange={(e)=>setReply(e.target.value)} />
+          <button onClick={addReply}className="submit">Submit</button>
+          <MessagesList listData={data} setmesNum={setmesNum} />
+        </div>    
       </div>
     );
   };

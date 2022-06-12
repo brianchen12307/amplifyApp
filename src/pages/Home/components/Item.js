@@ -6,23 +6,25 @@ const Item = ({ _id, loginId, topic, pwd, creatorId, numPost, numFollower, setro
   const navigate = useNavigate();
 
   function deleteItem() {
-    axios.delete(`${API_HOST}/delete/room/${topic}`)
+    axios.delete(`${API_HOST}/delete/room/`,{
+      params:{
+        'roomId': _id                                                                 
+      }
+    })
     setroomNum(function(prev) {
       return prev - 1;
     }) 
   }
 
   function joinRoom(){
-    axios.put(`${API_HOST}/join`,{
-                'roomId':_id,
-                'userId':loginId
-            })
-            console.log(_id)
-            console.log(loginId)
+    axios.put(`${API_HOST}/join/${_id}/${loginId}`)
+    setroomNum(function(prev) {
+      return prev + 1;
+    })
   }
 
   function goEachRoom(){
-              navigate('/post', {state: {roomId : _id, creatorId : creatorId}})
+              navigate('/post', {state: {roomId : _id, loginId : loginId}})
   }
   
     return (
